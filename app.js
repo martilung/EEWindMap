@@ -24,8 +24,8 @@ function getWindColorClass(speed) {
 async function loadWindData() {
     try {
         // Fetch data from our backend API
-        // ***IMPORTANT: Make sure this URL is correct!***
-        const response = await fetch('https.://garmin-wind-api.vercel.app/api/all-stations');
+        // *** THIS URL HAS BEEN CORRECTED (https://) ***
+        const response = await fetch('https://garmin-wind-api.vercel.app/api/all-stations');
 
         if (!response.ok) {
             throw new Error(`API Error: ${response.statusText}`);
