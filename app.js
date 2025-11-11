@@ -74,6 +74,6 @@ async function loadWindData() {
 
 //
 // --- STEP 4: Run the function when the page loads ---
-//
+loadWindData(); // <-- This line runs the whole process
 // Note: We need a Leaflet plugin for rotation.
 // But wait, the standard L.marker doesn't support rotation...
