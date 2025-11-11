@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estonian Wind Map</title>
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    
+
     <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
     <div id="map"></div>
 
+    <!-- (at the bottom of your <body> tag) -->
+
+    <!-- 1. Leaflet JavaScript (Map Library) -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
+
+    <!-- 2. THE FIX: Add the rotation plugin -->
+    <script src="https://unpkg.com/leaflet-rotatedmarker@0.2.0/leaflet.rotatedMarker.js"></script>
+
+    <!-- 3. Our Custom JavaScript (must be last) -->
     <script src="app.js"></script>
+
 </body>
+
 </html>
