@@ -14,18 +14,17 @@ html {
 
 /*
  * --- Wind Icon Style ---
- * This is the "base" element. It's an invisible anchor
- * that we attach the arrow parts to.
+ * This is the "base" element. It's an anchor that
+ * we attach the arrow parts to.
  */
 .wind-icon {
     /* Set a base size */
     width: 30px;
-    height: 30px;
+    height: 35px;
+    /* Total height of the arrow */
 
-    /* Center the icon (optional but good) */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    /* This is the anchor for the ::before and ::after elements */
+    position: relative;
 
     /* Force it to be on top of map tiles */
     z-index: 1000;
@@ -35,36 +34,43 @@ html {
        Leaflet's 'rotationAngle' will adjust this.
     */
     transform: rotate(-90deg);
+
+    /* Center the icon visually */
+    margin-left: -15px;
+    margin-top: -17px;
 }
 
 /*
- * --- The Arrow "Line" ---
- * This is the rectangle part, attached *before* the icon div.
+ * --- The Arrow "Line" (Rectangle) ---
  */
 .wind-icon::before {
     content: '';
     position: absolute;
+    /* Positioned relative to .wind-icon */
+
+    /* Dimensions */
     width: 6px;
-    /* Width of the arrow line */
-    height: 18px;
-    /* Length of the arrow line */
+    height: 23px;
+    /* The length of the line */
 
-    /* Default color (will be overridden by speed) */
+    /* Placement:
+       - top: 0  (Align to the top of the .wind-icon box)
+       - left: 12px (Center it horizontally in the 30px box)
+    */
+    top: 0;
+    left: 12px;
+
+    /* Default color */
     background-color: black;
-
-    /* * Position it: 
-     * Move it 3px *up* from the center.
-     */
-    transform: translateY(-3px);
 }
 
 /*
- * --- The Arrow "Tip" ---
- * This is the triangle part, attached *after* the icon div.
+ * --- The Arrow "Tip" (Triangle) ---
  */
 .wind-icon::after {
     content: '';
     position: absolute;
+    /* Positioned relative to .wind-icon */
 
     /* Create the triangle shape */
     width: 0;
@@ -74,17 +80,18 @@ html {
     border-bottom: 12px solid black;
     /* Default color */
 
-    /* * Position it: 
-     * Move it 12px *down* from the center so it overlaps the line.
-     */
-    transform: translateY(12px);
+    /* Placement:
+       - top: 23px (Start exactly where the line ends)
+       - left: 5px  (Center the 20px-wide triangle in the 30px box)
+    */
+    top: 23px;
+    left: 5px;
 }
 
 
 /*
  * --- Wind Speed Color Classes ---
- * These classes are on the main .wind-icon element.
- * We use them to color *both* the line and the tip.
+ * These color *both* the line and the tip.
  */
 .wind-light::before,
 .wind-light::after {
@@ -112,10 +119,9 @@ html {
     border-bottom-color: #dc3545;
 }
 
-/* * We have to override the default "black" color
- * in the ::after pseudo-element when a color class is present.
- * This is a bit redundant but ensures the tip color
- * is set by the border, not the background.
+/*
+ * This override ensures the triangle's
+ * background stays transparent when a color is applied.
  */
 .wind-light::after,
 .wind-medium::after,
