@@ -13,8 +13,11 @@ html {
     /* Light gray background */
 }
 
-* --- This is the core of the wind icon --- */ .wind-icon {
-    /* These 4 lines create the triangle shape */
+/* * --- Wind Icon Style ---
+ * This is the core of the wind arrow.
+ */
+.wind-icon {
+    /* 1. Create the triangle shape */
     width: 0;
     height: 0;
     border-left: 10px solid transparent;
@@ -22,21 +25,19 @@ html {
     border-right: 10px solid transparent;
     /* Transparent side */
     border-bottom: 30px solid black;
-    /* This is the arrow body */
+    /* The arrow body (default color) */
 
-    /* This positions the icon correctly */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    /* This rotates the icon to point North (0°) by default */
-    /* Leaflet's rotationAngle will then adjust it */
+    /* 2. Rotate it to point North (0°) by default */
+    /* Leaflet's 'rotationAngle' will adjust this */
     transform: rotate(-90deg);
+
+    /* 3. Force it to be on top of map tiles */
+    z-index: 1000;
 }
 
-/* --- Wind Speed Color Classes ---
-  These classes will *only* change the color of the arrow.
-*/
+/* * --- Wind Speed Color Classes ---
+ * These classes are added by app.js to change the arrow color.
+ */
 .wind-light {
     border-bottom-color: #007bff;
     /* Blue */
