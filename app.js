@@ -24,8 +24,8 @@ function getWindColorClass(speed) {
 async function loadWindData() {
     try {
         // Fetch data from our backend API
-        // ***IMPORTANT: Update this URL to your API endpoint***
-        const response = await fetch('https://garmin-wind-api.vercel.app/api/all-stations');
+        // ***IMPORTANT: Make sure this URL is correct!***
+        const response = await fetch('https.://garmin-wind-api.vercel.app/api/all-stations');
 
         if (!response.ok) {
             throw new Error(`API Error: ${response.statusText}`);
@@ -40,20 +40,24 @@ async function loadWindData() {
             const iconClass = getWindColorClass(station.wind_speed);
 
             const windIcon = L.divIcon({
-                className: `wind-icon ${iconClass}`, // e.g., "wind-icon wind-medium"
-                iconSize: [20, 30],
-                iconAnchor: [10, 15] // Center of the icon
+                className: `wind-icon ${iconClass}`,
+                // This fix (from before) is crucial
+                iconSize: [24, 35],
+                iconAnchor: [12, 17.5]
             });
 
             // --- 3B: Create the Marker ---
+
+            // --- THIS IS THE 180° FIX ---
+            // A 270° (West) wind *comes from* the West and *blows toward* the East (90°).
+            // (270 + 180) % 360 = 450 % 360 = 90. This is the correct vector.
+            const rotation = (station.wind_direction + 180) % 360;
+
             const marker = L.marker(
                 [station.latitude, station.longitude],
                 {
                     icon: windIcon,
-                    // This is the magic: rotate the icon by the wind direction
-                    // Leaflet's 'rotationAngle' rotates clockwise from North (0 deg).
-                    // This matches our 'wind_direction' data perfectly.
-                    rotationAngle: station.wind_direction
+                    rotationAngle: rotation // Use the corrected rotation
                 }
             ).addTo(map);
 
@@ -74,6 +78,5 @@ async function loadWindData() {
 
 //
 // --- STEP 4: Run the function when the page loads ---
-loadWindData(); // <-- This line runs the whole process
-// Note: We need a Leaflet plugin for rotation.
-// But wait, the standard L.marker doesn't support rotation...
+//
+loadWindData();
