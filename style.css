@@ -10,50 +10,114 @@ html {
     height: 100%;
     width: 100%;
     background-color: #eee;
-    /* Light gray background */
 }
 
-/* * --- Wind Icon Style ---
- * This is the core of the wind arrow.
+/*
+ * --- Wind Icon Style ---
+ * This is the "base" element. It's an invisible anchor
+ * that we attach the arrow parts to.
  */
 .wind-icon {
-    /* 1. Create the triangle shape */
+    /* Set a base size */
+    width: 30px;
+    height: 30px;
+
+    /* Center the icon (optional but good) */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Force it to be on top of map tiles */
+    z-index: 1000;
+
+    /* Rotate the entire icon (including its parts) 
+       to point North (0°) by default.
+       Leaflet's 'rotationAngle' will adjust this.
+    */
+    transform: rotate(-90deg);
+}
+
+/*
+ * --- The Arrow "Line" ---
+ * This is the rectangle part, attached *before* the icon div.
+ */
+.wind-icon::before {
+    content: '';
+    position: absolute;
+    width: 6px;
+    /* Width of the arrow line */
+    height: 18px;
+    /* Length of the arrow line */
+
+    /* Default color (will be overridden by speed) */
+    background-color: black;
+
+    /* Position it: 
+       Move it 7px up from the center to make room for the tip */
+    transform: translateY(-7px);
+}
+
+/*
+ * --- The Arrow "Tip" ---
+ * This is the triangle part, attached *after* the icon div.
+ */
+.wind-icon::after {
+    content: '';
+    position: absolute;
+
+    /* Create the triangle shape */
     width: 0;
     height: 0;
     border-left: 10px solid transparent;
-    /* Transparent side */
     border-right: 10px solid transparent;
-    /* Transparent side */
-    border-bottom: 30px solid black;
-    /* The arrow body (default color) */
+    border-bottom: 12px solid black;
+    /* Default color */
 
-    /* 2. Rotate it to point North (0°) by default */
-    /* Leaflet's 'rotationAngle' will adjust this */
-    transform: rotate(-90deg);
-
-    /* 3. Force it to be on top of map tiles */
-    z-index: 1000;
+    /* Position it: 
+       Move it 10px *down* from the center */
+    transform: translateY(10px);
 }
 
-/* * --- Wind Speed Color Classes ---
- * These classes are added by app.js to change the arrow color.
+
+/*
+ * --- Wind Speed Color Classes ---
+ * These classes are on the main .wind-icon element.
+ * We use them to color *both* the line and the tip.
  */
-.wind-light {
+.wind-light::before,
+.wind-light::after {
+    background-color: #007bff;
+    /* Line color */
     border-bottom-color: #007bff;
-    /* Blue */
+    /* Tip color */
 }
 
-.wind-medium {
+.wind-medium::before,
+.wind-medium::after {
+    background-color: #28a745;
     border-bottom-color: #28a745;
-    /* Green */
 }
 
-.wind-strong {
+.wind-strong::before,
+.wind-strong::after {
+    background-color: #ffc107;
     border-bottom-color: #ffc107;
-    /* Yellow */
 }
 
-.wind-severe {
+.wind-severe::before,
+.wind-severe::after {
+    background-color: #dc3545;
     border-bottom-color: #dc3545;
-    /* Red */
+}
+
+/* * We have to override the default "black" color
+ * in the ::after pseudo-element when a color class is present.
+ * This is a bit redundant but ensures the tip color
+ * is set by the border, not the background.
+ */
+.wind-light::after,
+.wind-medium::after,
+.wind-strong::after,
+.wind-severe::after {
+    background-color: transparent;
 }
