@@ -1,0 +1,48 @@
+/* Make the map fill the entire screen */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+    background-color: #eee; /* Light gray background */
+}
+
+/* --- This is the core of the wind icon ---
+  We use a special Leaflet class (L.divIcon) to create
+  a "marker" that is just a styled <div>.
+*/
+.wind-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* This is the arrow shape. It's a simple triangle.
+      The 'transform' rotates it to point up by default.
+    */
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 30px solid black; /* Default color */
+    transform: rotate(-90deg); /* Point up (0 degrees) */
+}
+
+/* --- Wind Speed Color Classes ---
+  Our JavaScript will add these classes to the icon.
+*/
+.wind-light {
+    border-bottom-color: #007bff; /* Blue */
+}
+.wind-medium {
+    border-bottom-color: #28a745; /* Green */
+}
+.wind-strong {
+    border-bottom-color: #ffc107; /* Yellow */
+}
+.wind-severe {
+    border-bottom-color: #dc3545; /* Red */
+}

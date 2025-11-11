@@ -1,0 +1,9 @@
+# Node.js dependencies
+node_modules/
+
+# Vercel build folder
+.vercel/
+
+# Other common files to ignore
+.env
+.DS_Store
