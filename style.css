@@ -1,5 +1,6 @@
 /* Make the map fill the entire screen */
-body, html {
+body,
+html {
     margin: 0;
     padding: 0;
     height: 100%;
@@ -8,41 +9,50 @@ body, html {
 #map {
     height: 100%;
     width: 100%;
-    background-color: #eee; /* Light gray background */
+    background-color: #eee;
+    /* Light gray background */
 }
 
-/* --- This is the core of the wind icon ---
-  We use a special Leaflet class (L.divIcon) to create
-  a "marker" that is just a styled <div>.
-*/
-.wind-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    /* This is the arrow shape. It's a simple triangle.
-      The 'transform' rotates it to point up by default.
-    */
+* --- This is the core of the wind icon --- */ .wind-icon {
+    /* These 4 lines create the triangle shape */
     width: 0;
     height: 0;
     border-left: 10px solid transparent;
+    /* Transparent side */
     border-right: 10px solid transparent;
-    border-bottom: 30px solid black; /* Default color */
-    transform: rotate(-90deg); /* Point up (0 degrees) */
+    /* Transparent side */
+    border-bottom: 30px solid black;
+    /* This is the arrow body */
+
+    /* This positions the icon correctly */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* This rotates the icon to point North (0°) by default */
+    /* Leaflet's rotationAngle will then adjust it */
+    transform: rotate(-90deg);
 }
 
 /* --- Wind Speed Color Classes ---
-  Our JavaScript will add these classes to the icon.
+  These classes will *only* change the color of the arrow.
 */
 .wind-light {
-    border-bottom-color: #007bff; /* Blue */
+    border-bottom-color: #007bff;
+    /* Blue */
 }
+
 .wind-medium {
-    border-bottom-color: #28a745; /* Green */
+    border-bottom-color: #28a745;
+    /* Green */
 }
+
 .wind-strong {
-    border-bottom-color: #ffc107; /* Yellow */
+    border-bottom-color: #ffc107;
+    /* Yellow */
 }
+
 .wind-severe {
-    border-bottom-color: #dc3545; /* Red */
+    border-bottom-color: #dc3545;
+    /* Red */
 }
