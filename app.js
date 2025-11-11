@@ -25,35 +25,35 @@ async function loadWindData() {
     try {
         // Fetch data from our backend API
         // ***IMPORTANT: Update this URL to your API endpoint***
-        const response = await fetch('/api/all-stations');
-        
+        const response = await fetch('https://garmin-wind-api.vercel.app/api/all-stations');
+
         if (!response.ok) {
             throw new Error(`API Error: ${response.statusText}`);
         }
-        
+
         const stations = await response.json();
 
         // Loop through every station
         for (const station of stations) {
-            
+
             // --- 3A: Create the Custom Icon ---
             const iconClass = getWindColorClass(station.wind_speed);
-            
+
             const windIcon = L.divIcon({
                 className: `wind-icon ${iconClass}`, // e.g., "wind-icon wind-medium"
                 iconSize: [20, 30],
                 iconAnchor: [10, 15] // Center of the icon
             });
-            
+
             // --- 3B: Create the Marker ---
             const marker = L.marker(
-                [station.latitude, station.longitude], 
+                [station.latitude, station.longitude],
                 {
                     icon: windIcon,
                     // This is the magic: rotate the icon by the wind direction
                     // Leaflet's 'rotationAngle' rotates clockwise from North (0 deg).
                     // This matches our 'wind_direction' data perfectly.
-                    rotationAngle: station.wind_direction 
+                    rotationAngle: station.wind_direction
                 }
             ).addTo(map);
 
