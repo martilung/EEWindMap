@@ -15,24 +15,22 @@ html {
 /*
  * --- Wind Icon Style ---
  * This is the robust "single triangle" method.
- * It is designed to override default Leaflet styles.
  */
 .wind-icon {
     /* 1. Force the element to have no size. */
-    /* This creates the sharp point of the triangle. */
     width: 0 !important;
     height: 0 !important;
 
     /* 2. Create the triangle shape. */
     border-left: 12px solid transparent;
-    /* Transparent side */
     border-right: 12px solid transparent;
-    /* Transparent side */
-    border-bottom: 35px solid black;
-    /* The arrow body/tip (default color) */
+
+    /* --- CHANGE HERE --- */
+    /* Set the default color to also be transparent */
+    border-bottom: 35px solid rgba(0, 0, 0, 0.7);
+    /* Black, 70% transparent */
 
     /* 3. Rotate it to point North (0°) by default. */
-    /* Leaflet's 'rotationAngle' will then adjust this. */
     transform: rotate(-90deg);
 
     /* 4. Force it to be on top of map tiles. */
@@ -44,24 +42,24 @@ html {
 
 /*
  * --- Wind Speed Color Classes ---
- * These classes are added by app.js to change the arrow color.
+ * These now use rgba() to set transparency.
  */
 .wind-light {
-    border-bottom-color: #007bff;
-    /* Blue */
+    /* #007bff with 70% opacity */
+    border-bottom-color: rgba(0, 123, 255, 0.7);
 }
 
 .wind-medium {
-    border-bottom-color: #28a745;
-    /* Green */
+    /* #28a745 with 70% opacity */
+    border-bottom-color: rgba(40, 167, 69, 0.7);
 }
 
 .wind-strong {
-    border-bottom-color: #ffc107;
-    /* Yellow */
+    /* #ffc107 with 70% opacity */
+    border-bottom-color: rgba(255, 193, 7, 0.7);
 }
 
 .wind-severe {
-    border-bottom-color: #dc3545;
-    /* Red */
+    /* #dc3545 with 70% opacity */
+    border-bottom-color: rgba(220, 53, 69, 0.7);
 }
