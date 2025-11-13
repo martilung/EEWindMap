@@ -62,12 +62,24 @@ async function loadWindData() {
             ).addTo(map);
 
             // --- 3C: Add the Data Point (Popup) ---
-            marker.bindPopup(`
+
+            // Build the popup content dynamically
+            let popupContent = `
                 <b>${station.name}</b><br>
                 Wind: ${station.wind_speed} m/s<br>
+            `;
+
+            // Only add the gust line if wind_gust is not null and greater than 0
+            if (station.wind_gust) {
+                popupContent += `Gust: ${station.wind_gust} m/s<br>`;
+            }
+
+            popupContent += `
                 Direction: ${station.wind_direction}°<br>
                 Time: ${station.observation_time}
-            `);
+            `;
+
+            marker.bindPopup(popupContent);
         }
 
     } catch (error) {
